@@ -137,10 +137,10 @@
 							.enter()
 							.append("rect");
 			var rectangleAttributes = rectangles
-									.attr("x", function (d) { return d.x; })
-									.attr("y", function (d) { return d.y; })
-									.attr("height", 5)
-                          			.attr("width", 5)
+									.attr("x", function (d) { return d.x * 12; })
+									.attr("y", function (d) { return d.y * 12; })
+									.attr("height", 10)
+                          			.attr("width", 10)
                           			.style("fill", 'red');
 			
 
