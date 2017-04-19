@@ -49,6 +49,7 @@ for(var i = 0; i < n; i++){
 		longer = s2;
 		shorter = s1;
 	}
+
 	var longerLength = longer.length;
 	var shorterLength = shorter.length;
 
@@ -63,8 +64,8 @@ for(var i = 0; i < n; i++){
 	for(var j=0; j < shorterLength; j++){
 
 		results[i][j] = [2];
-		results[i][j][0] = s1Array[j];
-		results[i][j][1] = s2Array[j];
+		results[i][j][0] = matrixArray.indexOf(s1Array[j]);
+		results[i][j][1] = matrixArray.indexOf(s2Array[j]);
 
 		// if(s1Array[j] == s2Array[j]){
 		// 	console.log("Matched : " + s1Array[j] +' , '+ s2Array[j]);
@@ -72,14 +73,14 @@ for(var i = 0; i < n; i++){
 		// 	console.log("Not Matched : " + s1Array[j] +' , '+ s2Array[j]);
 		// }
 	}
-	
 
-	// 	//array[i] = s1.split(' ');
+
+	//array[i] = s1.split(' ');
 
 	//console.log(results[i]);
 	
-	
 }
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

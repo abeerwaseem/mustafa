@@ -43,39 +43,39 @@
 		//console.log(data);	
 			
 		//create a line function that can convert data[] into x and y points
-		var line = d3.line()
-			// assign the X function to plot our line as we wish
-			.x(function(d,i) { 
-				console.log(d);
-				// verbose logging to show what's actually being done
-				//console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
-				// return the X coordinate where we want to plot this datapoint
-				return x(i); 
-			})
-			.y(function(d) { 
-				// verbose logging to show what's actually being done
-				//console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
-				// return the Y coordinate where we want to plot this datapoint
-				return y(d); 
-			})
+		// var line = d3.line()
+		// 	// assign the X function to plot our line as we wish
+		// 	.x(function(d,i) { 
+		// 		console.log(d);
+		// 		// verbose logging to show what's actually being done
+		// 		//console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
+		// 		// return the X coordinate where we want to plot this datapoint
+		// 		return x(i); 
+		// 	})
+		// 	.y(function(d) { 
+		// 		// verbose logging to show what's actually being done
+		// 		//console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
+		// 		// return the Y coordinate where we want to plot this datapoint
+		// 		return y(d); 
+		// 	})
 
 			// Add an SVG element with the desired dimensions and margin.
 			var graph = d3.select("#graph").append("svg")
-				.datum(results)
+				  .datum(results)
 			      .attr("width", w + m[1] + m[3])
 			      .attr("height", h + m[0] + m[2])
-			    .append("g")
+			      .append("g")
 			      .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
 			
 
 			// create yAxis
-			var xAxis = d3.axisBottom(x);
+			var xAxis = d3.axisTop(x);
 			// Add the x-axis.
 			graph.append("g")
 
 			      .attr("class", "x axis")
-			      .attr("transform", "translate(0," + h + ")")
+			      .attr("transform", "translate(0,0)")
 			      .call(xAxis);
 
 
@@ -89,7 +89,36 @@
 			
   			// Add the line by appending an svg:path element with the data line we created above
 			// do this AFTER the axes above so that the line is above the tick-lines
-  			graph.append("path").attr("d", line(results));
+  			//graph.append("path").attr("d", line(results));
+
+  			// Create a group for each row in the data matrix and
+			// translate the group vertically
+			graph.append("g")
+			    .data(results)
+			    .enter()
+			    .append('g')
+			    .attr('transform', function(d, i) {
+			    	console.log(d.length);
+
+			        return 'translate(0, ' + 15 * d[0][1] + ')';
+			    });
+
+			var rw = 10;
+			var rh = 10;    
+
+			// For each group, create a set of rectangles and bind 
+			// them to the inner array (the inner array is already
+			// binded to the group)
+			graph.selectAll('rect')
+			    .data(function(d) { return d; })
+			    .enter()
+			    .append('rect')
+			        .attr('x', function(d, i) {
+			         //console.log(i);
+			         return 15 * d[0][0]; 
+			     	})
+			        .attr('width', rw)
+			        .attr('height', rh);
 			
 
 	</script>
