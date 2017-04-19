@@ -53,7 +53,6 @@ for(var i = 0; i < n; i++){
 		longer = s2;
 		shorter = s1;
 	}
-
 	var longerLength = longer.length;
 	var shorterLength = shorter.length;
 
@@ -67,12 +66,6 @@ for(var i = 0; i < n; i++){
 	//results[i] = [shorterLength];
 	//var obj = '{';
 	for(var j=0; j < shorterLength; j++){
-<<<<<<< HEAD:app/routes/test_old.js
-
-		results[i][j] = [2];
-		results[i][j][0] = matrixArray.indexOf(s1Array[j]);
-		results[i][j][1] = matrixArray.indexOf(s2Array[j]);
-=======
 		results.push({ 
 	        "x" : matrixArray.indexOf(s1Array[j]),
 	        "y"  :  matrixArray.indexOf(s2Array[j])
@@ -85,7 +78,6 @@ for(var i = 0; i < n; i++){
 
 		// obj += 'x : '+s1Array[j]+',';
 		// obj += 'y : '+s2Array[j];
->>>>>>> e42a6da441de1dfca45d1f7af6f03ff62d78ee20:app/routes/test.js
 
 		// if(s1Array[j] == s2Array[j]){
 		// 	console.log("Matched : " + s1Array[j] +' , '+ s2Array[j]);
@@ -93,24 +85,18 @@ for(var i = 0; i < n; i++){
 		// 	console.log("Not Matched : " + s1Array[j] +' , '+ s2Array[j]);
 		// }
 	}
-<<<<<<< HEAD:app/routes/test_old.js
-=======
 
 	//obj += '}';
 	
->>>>>>> e42a6da441de1dfca45d1f7af6f03ff62d78ee20:app/routes/test.js
 
-
-	//array[i] = s1.split(' ');
+	// 	//array[i] = s1.split(' ');
 
 	//console.log(results[i]);
 	
+	
 }
 
-<<<<<<< HEAD:app/routes/test_old.js
-=======
 //console.log(results);
->>>>>>> e42a6da441de1dfca45d1f7af6f03ff62d78ee20:app/routes/test.js
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

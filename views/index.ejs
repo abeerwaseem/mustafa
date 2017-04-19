@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+
+
+    
+
+    
+   	<div class="col-md-12" style="height:600px;overflow-y: scroll">
+	   	<table class="table">
+			<tr>
+				<th>Epoch</th>
+				<th>Ground Value</th>
+				<th>Prediction</th>
+				<th>Match</th>
+			</tr>
+			<% for(var i = 0; i < json.length; i++){ %>
+				<tr style="word-break: break-all;" ng-repeat="nums in showNums">
+					<td width="10%"><%= json[i].Epoch %></td>
+					<td width="40%"><%= json[i].Ground %></td>
+					<td width="40%"><%= json[i].Prediction %></td >
+					<td width="10%"><%= json[i].Match %></td>
+				</tr>
+			<% } %>
+		</table>
+	</div>
+	
+  </body>
+</html>

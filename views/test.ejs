@@ -79,27 +79,6 @@
 		//console.log(data);	
 			
 		//create a line function that can convert data[] into x and y points
-<<<<<<< HEAD:app/views/test_old.ejs
-		// var line = d3.line()
-		// 	// assign the X function to plot our line as we wish
-		// 	.x(function(d,i) { 
-		// 		console.log(d);
-		// 		// verbose logging to show what's actually being done
-		// 		//console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
-		// 		// return the X coordinate where we want to plot this datapoint
-		// 		return x(i); 
-		// 	})
-		// 	.y(function(d) { 
-		// 		// verbose logging to show what's actually being done
-		// 		//console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
-		// 		// return the Y coordinate where we want to plot this datapoint
-		// 		return y(d); 
-		// 	})
-
-			// Add an SVG element with the desired dimensions and margin.
-			var graph = d3.select("#graph").append("svg")
-				  .datum(results)
-=======
 		var line = d3.line()
 			// assign the X function to plot our line as we wish
 			.x(function(d,i) { 
@@ -120,7 +99,6 @@
 			// Add an SVG element with the desired dimensions and margin.
 			var graph = d3.select("#graph").append("svg")
 				  //.data(results)
->>>>>>> e42a6da441de1dfca45d1f7af6f03ff62d78ee20:app/views/test.ejs
 			      .attr("width", w + m[1] + m[3])
 			      .attr("height", h + m[0] + m[2])
 			      .append("g")
@@ -129,12 +107,12 @@
 			
 
 			// create yAxis
-			var xAxis = d3.axisTop(x);
+			var xAxis = d3.axisBottom(x);
 			// Add the x-axis.
 			graph.append("g")
 
 			      .attr("class", "x axis")
-			      .attr("transform", "translate(0,0)")
+			      .attr("transform", "translate(0," + h + ")")
 			      .call(xAxis);
 
 
@@ -150,36 +128,6 @@
 			// do this AFTER the axes above so that the line is above the tick-lines
   			//graph.append("path").attr("d", line(results));
 
-<<<<<<< HEAD:app/views/test_old.ejs
-  			// Create a group for each row in the data matrix and
-			// translate the group vertically
-			graph.append("g")
-			    .data(results)
-			    .enter()
-			    .append('g')
-			    .attr('transform', function(d, i) {
-			    	console.log(d.length);
-
-			        return 'translate(0, ' + 15 * d[0][1] + ')';
-			    });
-
-			var rw = 10;
-			var rh = 10;    
-
-			// For each group, create a set of rectangles and bind 
-			// them to the inner array (the inner array is already
-			// binded to the group)
-			graph.selectAll('rect')
-			    .data(function(d) { return d; })
-			    .enter()
-			    .append('rect')
-			        .attr('x', function(d, i) {
-			         //console.log(i);
-			         return 15 * d[0][0]; 
-			     	})
-			        .attr('width', rw)
-			        .attr('height', rh);
-=======
 			//var svgContainer = d3.select("#graph").append("svg")
 								// .attr("width", w + m[1] + m[3])
 								// .attr("height", h + m[0] + m[2]);
@@ -196,7 +144,6 @@
                           			.style("fill", 'red');
 			
 
->>>>>>> e42a6da441de1dfca45d1f7af6f03ff62d78ee20:app/views/test.ejs
 			
 
 	</script>
