@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
+    <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+
     <script src="https://d3js.org/d3.v4.js"></script>
     <style>
 			/* tell the SVG path to be a thin blue line without any area fill */
@@ -54,8 +56,8 @@
 		
 		// define dimensions of graph
 		var m = [80, 80, 80, 80]; // margins
-		var w = 1010; // width
-		var h = 1010; // height
+		var w = 700; // width
+		var h = 700; // height
 		
 		// create a simple data array that we'll plot with a line (this array represents only the Y values, X will just be the index location)
 		
@@ -66,11 +68,11 @@
 		var results = <%- JSON.stringify(results) %>;
 
 		// X scale will fit all values from data[] within pixels 0-w
-		var x = d3.scaleBand().domain(nodes).range([0, 1010]);
+		var x = d3.scaleBand().domain(nodes).range([0, 700]);
 		//var x = d3.extent(data, function(d) { return d.index; });
 		// Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
 		
-		var y = d3.scaleBand().domain(nodes.reverse()).range([1010, 0]);
+		var y = d3.scaleBand().domain(nodes.reverse()).range([700, 0]);
 
 	
 			// automatically determining max range can work something like this
@@ -116,7 +118,7 @@
 							.enter()
 							.append("g")
 							.attr('transform', function(d, i) {
-						        return 'translate(0, ' + 10 * i + ')';
+						        return 'translate(0, ' + 7 * i + ')';
 						    })
 							.style("fill", '#ececec');      
 
@@ -156,10 +158,10 @@
 							.append("rect");
 							
 			var rectangleAttributes1 = rectangles1
-									.attr("x", function (d, i) { return i * 10; })
+									.attr("x", function (d, i) { return i * 7; })
 									//.attr("y", function (d, i) { return i * 10; })
-									.attr("height", 10)
-                          			.attr("width", 10);				
+									.attr("height", 5)
+                          			.attr("width", 5);				
 							
 			var rectangles = graph.selectAll("p")
 							.data(results)
@@ -172,7 +174,7 @@
 										}else{
 											var xx = d.x;
 										}
-										return xx * 10; 
+										return xx * 7; 
 									})
 									.attr("y", function (d, i) { 
 										if(d.y < 0){
@@ -180,10 +182,10 @@
 										}else{
 											var yy = d.y;
 										}
-										return yy * 10; 
+										return yy * 7; 
 									})
-									.attr("height", 10)
-                          			.attr("width", 10)
+									.attr("height", 5)
+                          			.attr("width", 5)
                           			.attr("fill-opacity", function (d, i) {
                           				var opac = d.value;
 
@@ -211,6 +213,8 @@
                           				// 	break;			
                           				// }
 
+                          				//return d.value/100;
+
                           				
                           			})
                           			.attr("index", function (d, i) {
@@ -218,7 +222,13 @@
 
                           				return i;
                           			})
-                          			.attr("fill", 'red');
+                          			.attr("fill", 'red')
+                          			.on("mouseover", function(d,i) {
+									    d3.select(this).append("text")
+									        .text( d.x)
+									        .attr("x", x(d.x))
+									        .attr("y", y(d.y)); 
+									});
 			
 
 			
