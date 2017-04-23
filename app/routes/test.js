@@ -3,7 +3,7 @@ var router = express.Router();
 
 var epsilon = require('epsilonjs');
 
-
+var iconv = require('iconv-lite');
 
 var jsonfile = require('jsonfile');
 var file = 'data/test.json';
@@ -19,10 +19,10 @@ var matrixArray = [chars.length];
 var results = [];
 
 for(var k = 0; k < chars.length ; k++){
-	matrixArray[k] = chars[k].Source;
+	matrixArray[k] = chars[k].Source, 'cp1252';
 	links.push({ 
 	        "index" : k,
-	        "value"  :  chars[k].Source
+	        "value"  : chars[k].Source
 	    });
 }
 
@@ -59,6 +59,7 @@ for(var i = 0; i < n; i++){
 	var s1Array = Array.from(s1);
     var s2Array = Array.from(s2);
 
+
 	
 	// if (longerLength == 0) {
 	// 	json[i] = {"Ground" : s1, "Prediction": s2, "Match" : 1.0};
@@ -69,8 +70,8 @@ for(var i = 0; i < n; i++){
 		results.push({ 
 	        "x" : matrixArray.indexOf(s1Array[j]),
 	        "y"  :  matrixArray.indexOf(s2Array[j])
-	       /* "x" : s1Array[j],
-	        "y"  :  s2Array[j]*/
+	        // "xvalue" : s1Array[j],
+	        // "yvalue"  :  s2Array[j]
 	    });
 		/*results[i][j] = [2];
 		results[i][j][0] = s1Array[j];
@@ -94,6 +95,31 @@ for(var i = 0; i < n; i++){
 	//console.log(results[i]);
 	
 	
+}
+
+
+// Matchin arrays
+for(var m = 0; m < results.length; m++){
+	var arrOne = results[m];
+	var count = 1;
+	var opacity;
+	
+	 
+		for(var n = 0; n < results.length; n++){
+			if(JSON.stringify(arrOne) === JSON.stringify(results[n])){
+				
+				opacity = count;
+				
+				count++;
+			}
+		}
+
+		// results[m].push({
+		// 	"index" : index,
+		// 	"value" : value
+		// });
+		results[m]["index"] = m;
+		results[m]["value"] = opacity;
 }
 
 //console.log(results);

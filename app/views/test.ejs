@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+	<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
     <title><%= title %></title>
     <!-- CSS -->
     <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
@@ -52,8 +54,8 @@
 		
 		// define dimensions of graph
 		var m = [80, 80, 80, 80]; // margins
-		var w = 1000; // width
-		var h = 1000; // height
+		var w = 1010; // width
+		var h = 1010; // height
 		
 		// create a simple data array that we'll plot with a line (this array represents only the Y values, X will just be the index location)
 		
@@ -63,14 +65,12 @@
 
 		var results = <%- JSON.stringify(results) %>;
 
-		//console.log(data);
-
 		// X scale will fit all values from data[] within pixels 0-w
-		var x = d3.scaleBand().domain(nodes).range([0, 1000]);
+		var x = d3.scaleBand().domain(nodes).range([0, 1010]);
 		//var x = d3.extent(data, function(d) { return d.index; });
 		// Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
 		
-		var y = d3.scaleBand().domain(nodes).range([1000, 0]);
+		var y = d3.scaleBand().domain(nodes.reverse()).range([1010, 0]);
 
 	
 			// automatically determining max range can work something like this
@@ -104,15 +104,31 @@
 			      .append("g")
 			      .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
+
+			var datanew = [];
+			for (var k = 0; k < 101; k += 1) {
+			    datanew.push(d3.range(101));
+			}
+
+
+			var rectGroup = graph.selectAll("g")
+							.data(datanew)
+							.enter()
+							.append("g")
+							.attr('transform', function(d, i) {
+						        return 'translate(0, ' + 10 * i + ')';
+						    })
+							.style("fill", '#ececec');      
+
 			
 
 			// create yAxis
-			var xAxis = d3.axisBottom(x);
+			var xAxis = d3.axisTop(x);
 			// Add the x-axis.
 			graph.append("g")
 
 			      .attr("class", "x axis")
-			      .attr("transform", "translate(0," + h + ")")
+			      .attr("transform", "translate(0,-10)")
 			      .call(xAxis);
 
 
@@ -132,16 +148,77 @@
 								// .attr("width", w + m[1] + m[3])
 								// .attr("height", h + m[0] + m[2]);
 
-			var rectangles = graph.selectAll("rect")
+			
+
+			var rectangles1 = rectGroup.selectAll("rect")
+							.data(datanew)
+							.enter()
+							.append("rect");
+							
+			var rectangleAttributes1 = rectangles1
+									.attr("x", function (d, i) { return i * 10; })
+									//.attr("y", function (d, i) { return i * 10; })
+									.attr("height", 10)
+                          			.attr("width", 10);				
+							
+			var rectangles = graph.selectAll("p")
 							.data(results)
 							.enter()
 							.append("rect");
 			var rectangleAttributes = rectangles
-									.attr("x", function (d) { return d.x * 12; })
-									.attr("y", function (d) { return d.y * 12; })
+									.attr("x", function (d, i) { 
+										if(d.x < 0){
+											var xx = i;
+										}else{
+											var xx = d.x;
+										}
+										return xx * 10; 
+									})
+									.attr("y", function (d, i) { 
+										if(d.y < 0){
+											var yy = i;
+										}else{
+											var yy = d.y;
+										}
+										return yy * 10; 
+									})
 									.attr("height", 10)
                           			.attr("width", 10)
-                          			.style("fill", 'red');
+                          			.attr("fill-opacity", function (d, i) {
+                          				var opac = d.value;
+
+                          				if(opac < 50){
+                          					return 0.4;
+                          				}
+
+                          				if(opac == 50){
+                          					return 0.5;
+                          				}
+
+                          				if(opac > 50){
+                          					return opac/100;
+                          				}
+
+                          				// switch(opac){
+                          				// 	case (opac < 50):
+                          				// 		return 0.4;
+                          				// 	break;
+                          				// 	case (opac == 50):
+                          				// 		return 0.5;
+                          				// 	break;
+                          				// 	case (opac > 50):
+                          				// 		return opac/100;
+                          				// 	break;			
+                          				// }
+
+                          				
+                          			})
+                          			.attr("index", function (d, i) {
+                          				//console.log(d.value);
+
+                          				return i;
+                          			})
+                          			.attr("fill", 'red');
 			
 
 			
